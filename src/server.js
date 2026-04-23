@@ -7,6 +7,7 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 import { errors } from 'celebrate';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import authRouter from './routes/authRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -15,6 +16,8 @@ app.use(cors());
 app.use(logger);
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(authRouter);
 
 app.use(notFoundHandler);
 
