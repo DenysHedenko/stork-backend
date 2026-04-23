@@ -5,10 +5,12 @@ import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { errors } from 'celebrate';
+import weeksRoutes from './routes/weeksRoutes.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import authRouter from './routes/authRoutes.js';
 import taskRoutes from './routes/taskRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -18,8 +20,10 @@ app.use(logger);
 app.use(express.json());
 app.use(cookieParser());
 
+app.use(weeksRoutes);
 app.use(authRouter);
 app.use(taskRoutes);
+app.use(userRoutes);
 
 app.use(notFoundHandler);
 

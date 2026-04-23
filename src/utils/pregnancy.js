@@ -3,6 +3,8 @@ import { ONE_DAY } from '../constants/time.js';
 const MAX_WEEK = 42;
 
 /** Єдина базова функція для роботи з датами */
+import { ONE_DAY, MAX_WEEK } from '../constants/time.js';
+
 export const getDiffDaysToDue = (dueDate) => {
   if (!dueDate) return null;
 
