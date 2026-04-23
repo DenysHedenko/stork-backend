@@ -1,23 +1,49 @@
-import mongoose from 'mongoose';
+import { model, Schema, SchemaTypes } from 'mongoose';
 
-const diarySchema = new mongoose.Schema(
+const diarySchema = new Schema(
   {
+    userId: {
+      type: SchemaTypes.ObjectId,
+      required: true,
+      ref: 'User',
+    },
     title: {
       type: String,
       required: true,
+      min: 1,
+      max: 64,
     },
-    content: {
+    description: {
       type: String,
       required: true,
+      min: 1,
+      max: 1000,
+    },
+    date: {
+      type: String,
+      required: false,
     },
     emotions: {
-      type: [String],
-      default: [],
+      required: true,
+      type: [
+        {
+          type: SchemaTypes.ObjectId,
+          ref: 'Emotion',
+        },
+      ],
+      validate: {
+        validator: function (arr) {
+          return Array.isArray(arr) && arr.length > 0 && arr.length <= 12;
+        },
+        message:
+          'Emotions are required and must contain between 1 and 12 items',
+      },
     },
   },
   {
     timestamps: true,
+    versionKey: false,
   },
 );
 
-export const Diary = mongoose.model('Diary', diarySchema);
+export const Diary = model('Diary', diarySchema);

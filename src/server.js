@@ -19,11 +19,12 @@ app.use(cors());
 app.use(logger);
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(weeksRoutes);
 app.use(authRouter);
 app.use(taskRoutes);
 app.use(userRoutes);
-app.use('/api/diary', diaryRoutes);
+app.use(diaryRoutes);
 
 app.use(notFoundHandler);
 app.use(errors());

@@ -1,23 +1,23 @@
-import { Joi } from 'celebrate';
+import { Joi, Segments } from 'celebrate';
 
 export const createDiarySchema = {
-  body: Joi.object({
-    title: Joi.string().min(2).max(100).trim().required(),
-    content: Joi.string().min(1).trim().required(),
-    emotions: Joi.array().items(Joi.string()).optional(),
+  [Segments.BODY]: Joi.object({
+    title: Joi.string().min(1).max(64).trim().required(),
+    description: Joi.string().min(1).max(1000).trim().required(),
+    emotions: Joi.array().items(Joi.string().trim()).min(1).max(12).required(),
   }),
 };
 
 export const updateDiarySchema = {
-  body: Joi.object({
-    title: Joi.string().min(2).max(100).trim(),
-    content: Joi.string().min(1).trim(),
-    emotions: Joi.array().items(Joi.string()).optional(),
+  [Segments.BODY]: Joi.object({
+    title: Joi.string().min(1).max(64).trim(),
+    description: Joi.string().min(1).max(1000).trim(),
+    emotions: Joi.array().items(Joi.string().trim()).min(1).max(12),
   }),
 };
 
 export const diaryIdSchema = {
-  params: Joi.object({
+  [Segments.PARAMS]: Joi.object({
     id: Joi.string().length(24).hex().required(),
   }),
 };

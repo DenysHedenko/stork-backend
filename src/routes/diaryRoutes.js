@@ -1,14 +1,11 @@
 import { Router } from 'express';
 import { celebrate } from 'celebrate';
-
 import {
   getAllEntries,
-  getEntryById,
   createEntry,
   updateEntry,
   deleteEntry,
 } from '../controllers/diaryController.js';
-
 import {
   createDiarySchema,
   updateDiarySchema,
@@ -19,21 +16,19 @@ import { authenticate } from '../middleware/authenticate.js';
 
 const router = Router();
 
-router.use(authenticate);
+router.use('/diaries', authenticate);
 
-router.get('/', getAllEntries);
+router.post('/diaries', celebrate(createDiarySchema), createEntry);
 
-router.post('/', celebrate(createDiarySchema), createEntry);
-
-router.get('/:id', celebrate(diaryIdSchema), getEntryById);
+router.get('/diaries', getAllEntries);
 
 router.patch(
-  '/:id',
+  '/diaries/:id',
   celebrate(diaryIdSchema),
   celebrate(updateDiarySchema),
   updateEntry,
 );
 
-router.delete('/:id', celebrate(diaryIdSchema), deleteEntry);
+router.delete('/diaries/:id', celebrate(diaryIdSchema), deleteEntry);
 
 export default router;
