@@ -27,14 +27,16 @@ export const getPublicWeeks = async (req, res) => {
     return res.status(200).json({
       weekNumber,
       daysUntilDue: getDaysUntilDueFallback(weekNumber),
-      tipForMom: momState?.comfortTips?.[0]?.tip || null,
       babyInfo: babyState
         ? {
-            analogy: babyState.analogy,
             image: babyState.image,
+            babySize: babyState.babySize,
+            babyWeight: babyState.babyWeight,
+            babyActivity: babyState.babyActivity,
             development: babyState.babyDevelopment,
           }
         : null,
+      tipForMom: momState?.comfortTips?.[0]?.tip || null,
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -95,11 +97,10 @@ export const getBabyInfo = async (req, res) => {
 
     return res.status(200).json({
       weekNumber,
-      development: babyState.babyDevelopment,
-      size: babyState.babySize,
-      weight: babyState.babyWeight,
-      analogy: babyState.analogy,
       image: babyState.image,
+      analogy: babyState.analogy,
+      development: babyState.babyDevelopment,
+      interestingFact: babyState.interestingFact,
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -122,9 +123,8 @@ export const getMomInfo = async (req, res) => {
 
     return res.status(200).json({
       weekNumber,
-      symptoms: momState.feelings?.states ?? [],
-      bodyChanges: momState.feelings?.sensationDescr ?? null,
-      tips: momState.comfortTips,
+      feelings: momState.feelings?.states ?? [],
+      comfortTips: momState.comfortTips,
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });
