@@ -100,7 +100,7 @@ export const getBabyInfo = async (req, res) => {
       weekNumber,
       image: babyState.image,
       analogy: babyState.analogy,
-      development: babyState.babyDevelopment,
+      babyDevelopment: babyState.babyDevelopment,
       interestingFact: babyState.interestingFact,
     });
   } catch (err) {
@@ -124,7 +124,7 @@ export const getMomInfo = async (req, res) => {
 
     return res.status(200).json({
       weekNumber,
-      feelings: momState.feelings?.states ?? [],
+      feelings: momState.feelings,
       comfortTips: momState.comfortTips,
     });
   } catch (err) {
