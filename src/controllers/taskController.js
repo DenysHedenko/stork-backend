@@ -28,11 +28,7 @@ export const getTasks = async (req, res) => {
 
   const tasks = await Task.find({ userId }).sort({ date: 1 });
 
-  res.status(200).json({
-    status: 200,
-    message: 'Tasks retrieved successfully',
-    data: tasks,
-  });
+  res.status(200).json(tasks);
 };
 
 export const updateTaskStatus = async (req, res) => {
