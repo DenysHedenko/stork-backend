@@ -179,6 +179,7 @@ import {
   requestResetEmailSchema,
   resetPasswordSchema,
 } from '../validations/authValidation.js';
+import { authenticate } from '../middleware/authenticate.js';
 
 const router = Router();
 
@@ -186,9 +187,9 @@ router.post('/auth/register', celebrate(registerUserSchema), registerUser);
 
 router.post('/auth/login', celebrate(loginUserSchema), loginUser);
 
-router.post('/auth/refresh', refreshUserSession);
+router.post('/auth/refresh', refreshUserSession); //refresh middleware
 
-router.post('/auth/logout', logoutUser);
+router.post('/auth/logout', authenticate, logoutUser);
 
 router.post(
   '/auth/request-reset-email',
