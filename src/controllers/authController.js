@@ -10,7 +10,7 @@ import Handlebars from 'handlebars';
 import { sendEmail } from '../utils/sendMail.js';
 
 export const registerUser = async (req, res) => {
-  const { email, password, name} = req.body;
+  const { email, password, name } = req.body;
 
   const existingUser = await User.findOne({ email });
 

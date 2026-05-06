@@ -160,9 +160,8 @@ import {
 import {
   createDiarySchema,
   updateDiarySchema,
-  diaryIdSchema,
 } from '../validations/diaryValidation.js';
-
+import { idValidationSchema } from '../validations/idValidation.js';
 import { authenticate } from '../middleware/authenticate.js';
 
 const router = Router();
@@ -175,11 +174,11 @@ router.get('/diaries', getAllEntries);
 
 router.patch(
   '/diaries/:id',
-  celebrate(diaryIdSchema),
+  celebrate(idValidationSchema),
   celebrate(updateDiarySchema),
   updateEntry,
 );
 
-router.delete('/diaries/:id', celebrate(diaryIdSchema), deleteEntry);
+router.delete('/diaries/:id', celebrate(idValidationSchema), deleteEntry);
 
 export default router;

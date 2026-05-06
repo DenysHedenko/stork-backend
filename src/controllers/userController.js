@@ -40,12 +40,12 @@ export const updateCurrentUser = async (req, res) => {
   const updateFields = {};
 
   if (name !== undefined) {
-  const trimmedName = name.trim();
-  if (!trimmedName) {
-    throw createHttpError(400, 'Name cannot be empty');
+    const trimmedName = name.trim();
+    if (!trimmedName) {
+      throw createHttpError(400, 'Name cannot be empty');
+    }
+    updateFields.name = trimmedName;
   }
-  updateFields.name = trimmedName;
-}
 
   if (gender !== undefined) {
     updateFields.gender = gender;
@@ -56,9 +56,13 @@ export const updateCurrentUser = async (req, res) => {
     updateFields.dueDate = dueDate;
   }
 
-  const user = await User.findOneAndUpdate({ _id: req.user._id }, updateFields, {
-    returnDocument: 'after',
-  });
+  const user = await User.findOneAndUpdate(
+    { _id: req.user._id },
+    updateFields,
+    {
+      returnDocument: 'after',
+    },
+  );
 
   if (!user) {
     throw createHttpError(404, 'User not found');

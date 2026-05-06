@@ -32,7 +32,7 @@ export const getTasks = async (req, res) => {
 };
 
 export const updateTaskStatus = async (req, res) => {
-  const { taskId } = req.params;
+  const { id } = req.params;
   const { isDone } = req.body;
   const userId = req.user._id;
 
@@ -41,7 +41,7 @@ export const updateTaskStatus = async (req, res) => {
   }
 
   const task = await Task.findOneAndUpdate(
-    { _id: taskId, userId },
+    { _id: id, userId },
     { isDone },
     { new: true },
   );
@@ -58,10 +58,10 @@ export const updateTaskStatus = async (req, res) => {
 };
 
 export const deleteTask = async (req, res) => {
-  const { taskId } = req.params;
+  const { id } = req.params;
   const userId = req.user._id;
 
-  const task = await Task.findOneAndDelete({ _id: taskId, userId });
+  const task = await Task.findOneAndDelete({ _id: id, userId });
 
   if (!task) {
     throw createHttpError(404, 'Task not found');
