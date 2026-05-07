@@ -197,6 +197,7 @@ export const loginWithGoogle = async (req, res) => {
   }
 
   let user = await User.findOne({ email });
+  let isNewUser = false;
 
   if (!user) {
     const randomPassword = Math.random().toString(36).slice(-10) + Math.random().toString(36).slice(-10);
@@ -208,6 +209,7 @@ export const loginWithGoogle = async (req, res) => {
       password: hashPassword,
       avatar: picture || undefined,
     });
+    isNewUser = true;
   }
 
   await Session.findOneAndDelete({ userId: user._id });
@@ -216,5 +218,5 @@ export const loginWithGoogle = async (req, res) => {
 
   await setSessionCookies(res, session);
 
-  res.status(200).json(user);
+  res.status(200).json({ user, isNewUser });
 };
